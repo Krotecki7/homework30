@@ -26,7 +26,7 @@ class Lesson(models.Model):
         upload_to="lms/courses", blank=True, null=True, verbose_name="Превью"
     )
     description = models.TextField(blank=True, null=True, verbose_name="Описание")
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name="Курс")
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name="Курс", related_name="lesson_set")
     video = models.URLField(
         unique=True,
         blank=True,
