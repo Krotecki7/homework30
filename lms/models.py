@@ -1,4 +1,5 @@
 from django.db import models
+from config.settings import AUTH_USER_MODEL
 
 
 class Course(models.Model):
@@ -9,6 +10,7 @@ class Course(models.Model):
         upload_to="lms/courses", blank=True, null=True, verbose_name="Превью"
     )
     description = models.TextField(blank=True, null=True, verbose_name="Описание")
+    owner = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
 
     class Meta:
         verbose_name = "Курс"
@@ -26,13 +28,16 @@ class Lesson(models.Model):
         upload_to="lms/courses", blank=True, null=True, verbose_name="Превью"
     )
     description = models.TextField(blank=True, null=True, verbose_name="Описание")
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name="Курс", related_name="lesson_set")
+    course = models.ForeignKey(
+        Course, on_delete=models.CASCADE, verbose_name="Курс", related_name="lesson_set"
+    )
     video = models.URLField(
         unique=True,
         blank=True,
         null=True,
         verbose_name="Ссылка на видео",
     )
+    owner = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
 
     class Meta:
         verbose_name = "Урок"
