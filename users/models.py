@@ -75,18 +75,31 @@ class Payments(models.Model):
     CSH = "CASH"
     CRD = "CARD"
 
-    STATUS_CHOICE = [
-        (CSH, "Оплата наличными"),
-        (CRD, "Перевод на карту")
-    ]
+    STATUS_CHOICE = [(CSH, "Оплата наличными"), (CRD, "Перевод на карту")]
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Пользователь", related_name="user_set")
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name="Пользователь",
+        related_name="user_set",
+    )
     date_pay = models.DateTimeField(auto_now_add=True, verbose_name="Дата платежа")
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name="Курс", related_name="course_set")
-    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, verbose_name="Урок", related_name="lesson_set")
-    amount = models.PositiveIntegerField(verbose_name="Сумма платежа", null=True, blank=True)
-    payment_method = models.CharField(max_length=40, choices=STATUS_CHOICE, blank=True, null=True,
-                                      verbose_name="Способ оплаты")
+    course = models.ForeignKey(
+        Course, on_delete=models.CASCADE, verbose_name="Курс", related_name="course_set"
+    )
+    lesson = models.ForeignKey(
+        Lesson, on_delete=models.CASCADE, verbose_name="Урок", related_name="lesson_set"
+    )
+    amount = models.PositiveIntegerField(
+        verbose_name="Сумма платежа", null=True, blank=True
+    )
+    payment_method = models.CharField(
+        max_length=40,
+        choices=STATUS_CHOICE,
+        blank=True,
+        null=True,
+        verbose_name="Способ оплаты",
+    )
 
     class Meta:
         verbose_name = "Платеж"
