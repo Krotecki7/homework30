@@ -16,6 +16,7 @@ from .paginators import CustomPaginator
 class CourseViewSet(ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
+    pagination_class = CustomPaginator
 
     def perform_create(self, serializer):
         course = serializer.save()
