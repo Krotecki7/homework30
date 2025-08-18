@@ -19,8 +19,6 @@ class UserSerializer(ModelSerializer):
 
 
 class FollowSerializer(ModelSerializer):
-    follow_check = SerializerMethodField()
-
     class Meta:
         model = Follow
         fields = "__all__"
