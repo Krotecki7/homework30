@@ -32,7 +32,8 @@ class LessonsTestCase(APITestCase):
     def test_lessons_create(self):
         url = reverse('lms:lessons-create')
         data = {
-            'name': 'test_lesson2'
+            'name': 'test_lesson2',
+            'video': 'https://www.youtube.com/1/'
         }
         response = self.client.post(url, data)
         self.assertEqual(
@@ -74,8 +75,8 @@ class LessonsTestCase(APITestCase):
                     "name": self.lesson.name,
                     "preview": self.lesson.preview,
                     "description": self.lesson.description,
-                    "course": self.lesson.course,
-                    "owner": self.lesson.owner
+                    "course": self.lesson.course.pk,
+                    "owner": self.lesson.owner.pk
                 }
             ]
         }

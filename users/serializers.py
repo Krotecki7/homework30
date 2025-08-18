@@ -21,11 +21,6 @@ class UserSerializer(ModelSerializer):
 class FollowSerializer(ModelSerializer):
     follow_check = SerializerMethodField()
 
-    def get_follow_check(self, instance):
-        if instance.follow_courses.all().first():
-            return instance.follow_courses.all().first().course
-        return 0
-
     class Meta:
         model = Follow
         fields = "__all__"
