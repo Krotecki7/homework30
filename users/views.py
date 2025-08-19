@@ -53,16 +53,16 @@ class UserDestroyAPIView(DestroyAPIView):
 class FollowAPIView(APIView):
     def post(self, request):
         user = request.user
-        course_id = request.data.get('course_id')
+        course_id = request.data.get("course_id")
         course = get_object_or_404(Course, id=course_id)
 
         subscription, created = Follow.objects.get_or_create(user=user, course=course)
         print(subscription)
         if not created:
             subscription.delete()
-            message = 'Subscription removed'
+            message = "Subscription removed"
         else:
-            message = 'Subscription added'
+            message = "Subscription added"
 
         return Response({"message": message})
 

@@ -47,8 +47,8 @@ INSTALLED_APPS = [
     "lms",
     "django_filters",
     "rest_framework_simplejwt",
-    'drf_yasg',
-    'corsheaders',
+    "drf_yasg",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
@@ -158,7 +158,7 @@ SIMPLE_JWT = {
 }
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:8000',
+    "http://localhost:8000",
 ]
 
 CORS_ALLOW_ALL_ORIGINS = False
