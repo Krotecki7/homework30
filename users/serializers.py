@@ -1,5 +1,5 @@
-from rest_framework.serializers import ModelSerializer
-from .models import Payments, User
+from rest_framework.serializers import ModelSerializer, SerializerMethodField
+from .models import Payments, User, Follow
 from django.contrib.auth.hashers import make_password
 
 
@@ -16,3 +16,9 @@ class UserSerializer(ModelSerializer):
 
     def validate_password(self, value: str) -> str:
         return make_password(value)
+
+
+class FollowSerializer(ModelSerializer):
+    class Meta:
+        model = Follow
+        fields = "__all__"

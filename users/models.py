@@ -107,3 +107,15 @@ class Payments(models.Model):
 
     def __str__(self):
         return f"{self.user} {self.amount}"
+
+
+class Follow(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_follow", verbose_name="Пользователь")
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="follow_courses", verbose_name="Курс")
+
+    class Meta:
+        verbose_name = "Подписка"
+        verbose_name_plural = "Подписки"
+
+    def __str__(self):
+        return f"{self.user}: {self.course}"
