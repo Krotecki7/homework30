@@ -12,13 +12,21 @@ from .models import Payments, User, Follow
 from .serializers import PaymentsSerializers, UserSerializer, FollowSerializer
 from lms.models import Course
 from rest_framework.response import Response
+from .services import create_price, create_stripe_session, create_product
 
 
-class PaymentsViewSet(ModelViewSet):
+class PaymentsCreateAPIView(CreateAPIView):
     queryset = Payments.objects.all()
     serializer_class = PaymentsSerializers
-    filterset_fields = ["course", "lesson", "payment_method"]
-    ordering_fields = ["date_pay"]
+
+    def perform_create(self, serializer):
+        payment = serializer.save(user=self.request.user)
+        product = create_product(payment)
+        price = create_price(payment.amount, product)
+        session_id, payment_link = create_stripe_session(price)
+        payment.session_id = session_id
+        payment.payment_link = payment_link
+        payment.save()
 
 
 class UserCreateAPIView(CreateAPIView):
