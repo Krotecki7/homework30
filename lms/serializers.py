@@ -21,8 +21,14 @@ class CourseSerializer(serializers.ModelSerializer):
         return obj.lesson_set.count()
 
     def get_follow(self, obj):
-        return self.context['request'].user.user_follow.filter(course=obj).exists()
+        return self.context["request"].user.user_follow.filter(course=obj).exists()
 
     class Meta:
         model = Course
-        fields = ("name", "description", "count_lessons", "lessons", "follow",)
+        fields = (
+            "name",
+            "description",
+            "count_lessons",
+            "lessons",
+            "follow",
+        )

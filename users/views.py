@@ -12,13 +12,21 @@ from .models import Payments, User, Follow
 from .serializers import PaymentsSerializers, UserSerializer, FollowSerializer
 from lms.models import Course
 from rest_framework.response import Response
+from .services import create_price, create_stripe_session, create_product
 
 
-class PaymentsViewSet(ModelViewSet):
+class PaymentsCreateAPIView(CreateAPIView):
     queryset = Payments.objects.all()
     serializer_class = PaymentsSerializers
-    filterset_fields = ["course", "lesson", "payment_method"]
-    ordering_fields = ["date_pay"]
+
+    def perform_create(self, serializer):
+        payment = serializer.save(user=self.request.user)
+        product = create_product(payment)
+        price = create_price(payment.amount, product)
+        session_id, payment_link = create_stripe_session(price)
+        payment.session_id = session_id
+        payment.payment_link = payment_link
+        payment.save()
 
 
 class UserCreateAPIView(CreateAPIView):
@@ -45,16 +53,16 @@ class UserDestroyAPIView(DestroyAPIView):
 class FollowAPIView(APIView):
     def post(self, request):
         user = request.user
-        course_id = request.data.get('course_id')
+        course_id = request.data.get("course_id")
         course = get_object_or_404(Course, id=course_id)
 
         subscription, created = Follow.objects.get_or_create(user=user, course=course)
         print(subscription)
         if not created:
             subscription.delete()
-            message = 'Subscription removed'
+            message = "Subscription removed"
         else:
-            message = 'Subscription added'
+            message = "Subscription added"
 
         return Response({"message": message})
 

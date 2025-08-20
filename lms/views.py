@@ -29,14 +29,20 @@ class CourseViewSet(ModelViewSet):
         elif self.action in ["update", "retrieve"]:
             self.permission_classes = (IsModer | IsOwner,)
         if self.action == "destroy":
-            self.permission_classes = (~IsModer, IsOwner,)
+            self.permission_classes = (
+                ~IsModer,
+                IsOwner,
+            )
         return super().get_permissions()
 
 
 class LessonCreateApiView(CreateAPIView):
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
-    permission_classes = (~IsModer, IsAuthenticated,)
+    permission_classes = (
+        ~IsModer,
+        IsAuthenticated,
+    )
     pagination_class = CustomPaginator
 
     def perform_create(self, serializer):
@@ -54,16 +60,25 @@ class LessonListApiView(ListAPIView):
 class LessonRetrieveApiView(RetrieveAPIView):
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
-    permission_classes = (IsModer | IsOwner, IsAuthenticated,)
+    permission_classes = (
+        IsModer | IsOwner,
+        IsAuthenticated,
+    )
 
 
 class LessonUpdateApiView(UpdateAPIView):
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
-    permission_classes = (IsModer | IsOwner, IsAuthenticated,)
+    permission_classes = (
+        IsModer | IsOwner,
+        IsAuthenticated,
+    )
 
 
 class LessonDestroyApiView(DestroyAPIView):
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
-    permission_classes = (IsOwner, IsAuthenticated,)
+    permission_classes = (
+        IsOwner,
+        IsAuthenticated,
+    )
