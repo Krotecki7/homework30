@@ -11,6 +11,9 @@ from .serializers import CourseSerializer, LessonSerializer
 from users.permissions import IsModer, IsOwner
 from rest_framework.permissions import IsAuthenticated
 from .paginators import CustomPaginator
+from users.models import Follow, User
+from lms.tasks import send_notification
+from rest_framework import response
 
 
 class CourseViewSet(ModelViewSet):
@@ -34,6 +37,11 @@ class CourseViewSet(ModelViewSet):
                 IsOwner,
             )
         return super().get_permissions()
+
+    def perform_update(self, serializer):
+        instance = serializer.save()
+        send_notification.delay(instance.pk)
+        instance.save()
 
 
 class LessonCreateApiView(CreateAPIView):
