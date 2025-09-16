@@ -1,6 +1,5 @@
 from django.urls import path
 from rest_framework.permissions import AllowAny
-from rest_framework.routers import SimpleRouter
 from users.apps import UsersConfig
 from .views import (
     UserCreateAPIView,

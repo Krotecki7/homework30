@@ -1,6 +1,5 @@
 import stripe
 from config.settings import STRIPE_SECRET_KEY
-from lms.models import Course, Lesson
 
 stripe.api_key = STRIPE_SECRET_KEY
 
