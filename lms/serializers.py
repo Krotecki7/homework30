@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from .models import Course, Lesson
 from .validators import validate_link
-from users.serializers import FollowSerializer
 
 
 class LessonSerializer(serializers.ModelSerializer):
