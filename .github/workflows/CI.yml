@@ -112,5 +112,5 @@ jobs:
           sudo docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/django_app:${{ github.sha }}
           sudo docker stop django_app || true
           sudo docker rm django_app || true
-          sudo docker run -d --name myapp -p 80:8000 ${{ secrets.DOCKER_HUB_USERNAME }}/django_app:${{ github.sha }}
+          sudo docker run -d --name django_app -p 80:8000 ${{ secrets.DOCKER_HUB_USERNAME }}/django_app:${{ github.sha }}
         EOF
