@@ -69,7 +69,7 @@ jobs:
         NAME: django
         USER: postgres
         PASSWORD: postgres
-        HOST: db
+        HOST: localhost
       run: python manage.py migrate
 
     - name: Run tests
@@ -77,7 +77,7 @@ jobs:
         NAME: django
         USER: postgres
         PASSWORD: postgres
-        HOST: db
+        HOST: localhost
       run: python manage.py test
 
   build:
