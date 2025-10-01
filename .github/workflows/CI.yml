@@ -82,6 +82,7 @@ jobs:
 
   build:
       runs-on: ubuntu-latest
+      needs: test
 
       steps:
       - name: Check out code
@@ -109,8 +110,7 @@ jobs:
     - name: Deploy to Server
       run: |
         ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+          sudo docker rm -f django_app || true
           sudo docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/django_app:${{ github.sha }}
-          sudo docker stop django_app || true
-          sudo docker rm django_app || true
-          sudo docker run -d --name django_app -p 80:8000 ${{ secrets.DOCKER_HUB_USERNAME }}/django_app:${{ github.sha }}
+          sudo docker run -d --name django_app -p 80:8000 --restart unless-stopped ${{ secrets.DOCKER_HUB_USERNAME }}/django_app:${{ github.sha }}
         EOF
