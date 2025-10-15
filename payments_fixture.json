@@ -1,0 +1,1 @@
+[{"model": "users.payments", "pk": 1, "fields": {"user": 1, "date_pay": "2025-08-10T17:47:11.880Z", "course": 4, "lesson": 2, "amount": 10000, "payment_method": "CARD"}}]
