@@ -11,9 +11,7 @@ from .serializers import CourseSerializer, LessonSerializer
 from users.permissions import IsModer, IsOwner
 from rest_framework.permissions import IsAuthenticated
 from .paginators import CustomPaginator
-from users.models import Follow, User
 from lms.tasks import send_notification
-from rest_framework import response
 
 
 class CourseViewSet(ModelViewSet):

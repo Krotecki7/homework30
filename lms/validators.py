@@ -1,5 +1,4 @@
 from rest_framework.serializers import ValidationError
-from .models import Lesson
 
 good_link = "https://www.youtube.com/"
 

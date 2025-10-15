@@ -2,10 +2,7 @@ version: '3.9'
 
 services:
     web:
-        build:
-            context: .
-            dockerfile: Dockerfile
-        container_name: django_app
+        build: .
         command:
             bash -c "python manage.py migrate &&
                     python manage.py runserver 0.0.0.0:8000"
@@ -20,6 +17,19 @@ services:
             - redis
         networks:
             - app_network
+
+    nginx:
+        build:
+            context: ./nginx
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+            - static_volume:/app/staticfiles
+        depends_on:
+            - web
+
     db:
         image: postgres:16
         container_name: postgres_db
@@ -74,3 +84,4 @@ networks:
 volumes:
     postgres_data:
     redis_data:
+    static_volume:
